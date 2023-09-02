@@ -1,38 +1,84 @@
-import { useState } from "react";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import './LoginPage.css';
+import CustomNavbar from './CustomNavbar';
 
-const LoginPage = () => {
-    const [email, setEmail] = useState('');
+function LoginPage() {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
+      const response = await axios.post('http://localhost:8080/login', {
+        email,
+        password,
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        // Store the JWT token in local storage
-        localStorage.setItem('token', data.token);
-        // Redirect to dashboard or perform any other action
+      if (response.status === 200) {
+        if (rememberMe) {
+          localStorage.setItem('userEmail', email);
+          localStorage.setItem('userPassword', password);
+        }
+        navigate("/dashboard");
       } else {
-        // Handle login error
-        console.error('Login failed');
+        setError('Wrong email or password or Server Error');
       }
     } catch (error) {
-      console.error('Error during login:', error);
+      setError('Invalid email or password');
     }
   };
+
   return (
-    <div className="App">
-      <h2>Login</h2>
-      <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <button onClick={handleLogin}>Login</button>
+    <div>
+        <CustomNavbar/>
+    <div className="login-page-container">
+      <div className="login-form">
+        <h2 className="login-title">Login</h2>
+        {error && <div className="alert alert-danger">{error}</div>}
+        <form onSubmit={handleLogin}>
+          <div className="mb-3">
+            <label className="form-label">Email:</label>
+            <input
+              type="email"
+              className="form-control"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Password:</label>
+            <input
+              type="password"
+              className="form-control"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3 form-check">
+            <input
+              type="checkbox"
+              className="form-check-input"
+              id="rememberMe"
+              checked={rememberMe}
+              onChange={() => setRememberMe(!rememberMe)}
+            />
+            <label className="form-check-label" htmlFor="rememberMe">Remember Me</label>
+          </div>
+          <button type="submit" className="btn btn-primary btn-block">Login</button>
+        </form>
+        <div className="text-center mt-3">
+          Don't have an account? <a href="/signup">Sign Up</a>
+        </div>
+      </div>
+    </div>
     </div>
   );
 }

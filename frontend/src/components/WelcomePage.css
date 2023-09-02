@@ -1,0 +1,93 @@
+/* WelcomePage.css */
+
+.container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.heading {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.clickable-card {
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.clickable-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.clickable-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.clickable-card p {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+@media (max-width: 768px) {
+  .clickable-card {
+    margin-bottom: 20px;
+  }
+}
+
+/* Styling for the navbar */
+.navbar {
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for navbar brand */
+.navbar-brand {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+/* Styling for navbar links */
+.nav-link {
+  font-size: 1.2rem;
+  color: #333;
+  margin-right: 1rem;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: #007bff;
+}
+
+/* Styling for cards */
+.clickable-card {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.clickable-card:hover {
+  background-color: #e9ecef;
+}
+
+.clickable-card h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.clickable-card p {
+  color: #666;
+}
